@@ -1,0 +1,29 @@
+//Grammar Definition
+keyword: 'class'|'local'|'int'|'float'|'str'|'bool'|'duck'|'void'|'array'|'set'|'map'|'field'|'static'|'class_var'|'override'|
+identifier: ('a'-'z'|'A'-'Z'|'_')('a'-'z'|'A'-'Z'|'0'-'9'|'_')*
+
+program: local_var_dec_stmt* class_dec_stmt* 
+
+local_var_dec_stmt: 'local' var_name '=' class_list';'
+
+class_list: class_name (',' class_name)*
+
+class_name: identifier| identifier'.'class_name
+
+var_name: identifier 
+
+class_dec_stmt: 'class' class_name (':' class_list)* '{' class_var_dec* method_dec* '}'
+
+class_var_dec: ('field'|'static'|'class_var') var_type var_name (',' var_name)* ';'
+
+method_dec: 'override'? ('constructor'|'method'|'static_method'|'class_method') var_type method_name '(' type_list ')' ';'
+
+var_type: native_type|declared_type
+
+native_type: 'int'|'float'|'str'|'boolean'|'duck'|'void'|container_type
+
+container_type: 'array''<'var_type'>'|'set''<'var_type'>'|'map''<'var_type ',' var_type '>'
+
+declared_type: class_name
+
+type_list: (var_type (',' var_type)*)?
